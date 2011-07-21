@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <script src="modules/m-js.js"></script>
+    <script src="modules/m-html.js"></script>
+    <script src="editor.js"></script>
+    <style>
+      .button{
+        background: #F05945;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF9780', endColorstr='#F05945'); 
+        background: -webkit-gradient(linear, left top, left bottom, from(#FF9780), to(#F05945)); 
+        background: -moz-linear-gradient(top,  #FF9780,  #F05945); 
+        border:1px solid #95372B;
+        padding:2px 12px;
+        display:inline-block;
+        text-decoration: none;
+        font-family: helvetica, sans-serif;
+        font-size:16px;
+        font-weight:800;
+        
+        color:#fff;
+        cursor:pointer;
+        
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        
+        -moz-box-shadow: 0px 0px 3px #ccc;
+        -webkit-box-shadow: 0px 0px 3px #ccc;
+        box-shadow: 0px 0px 3px #ccc;
+      }
+
+
+      .button:active{
+        background: #FF9780;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F05945', endColorstr='#FF9780'); 
+        background: -webkit-gradient(linear, left top, left bottom, from(#F05945), to(#FF9780)); 
+        background: -moz-linear-gradient(top,  #F05945,  #FF9780); 
+      }
+    </style>
+    <title>NoNameYetEditor</title>
+  </head>
+  
+  <body>
+    <h1>NoNameYetEditor</h1>
+    <div style="margin:5px;text-align:right">
+      <div id="indent" class="button">Indent</div>
+    </div>
+    <pre id="editable" contenteditable="true" class="editable"></pre>
+    <h2>Browser support</h2>
+    <ul>
+      <li>Google Chrome</li>
+    </ul>
+    <h2>Main issues</h2>
+    <ul>
+      <li>Performance with big files</li>
+      <li>Multiline comments</li>
+      <li>JS & HTML modules</li>
+      <li>Enter bugs</li>
+    </ul>
+    <script>
+      var editor = new Editor('editable', JS);
+      var indent = document.getElementById('indent');
+      indent.addEventListener("click", function(event){
+        editor.indent();
+      });
+    </script>
+  </body>
+</html>

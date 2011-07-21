@@ -1,0 +1,36 @@
+.editable{
+  font-family: Monaco, 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Lucida Console', monospace;
+  font-size:14px;
+  border:1px solid #aaa;
+  color:#333;
+  padding:0;
+  margin:0;
+  overflow:auto;
+  height:400px;
+}
+
+/*c-style highlightning*/
+.keyword{
+  color:#000;
+  font-weight:bolder;
+}
+.number{
+  color:#CC5827;
+}
+
+.comment{
+  color:#73997C;
+}
+.string{
+  color:#C23335;
+  font-weight:bolder;
+}
+.method{
+  color:#4E7399;
+} 
+
+/*html-style highlightning*/
+.tag{
+  color:#4E7399;
+  font-weight:bolder;
+}
