@@ -115,6 +115,7 @@ function TextEngine(container){
         }
         pos = str.indexOf('\n');
         if(pos != -1){
+          this.currentNode = node;
           this.range.setEnd(node,(offset != -1)?offset+pos:pos);
           break;
         }else{
@@ -123,9 +124,9 @@ function TextEngine(container){
       }
       
       if(!node.nextSibling){
-        if(node.nodeType == 3){
+        if(node.nodeType == 3){this.currentNode = node;
           this.range.setEnd(node,node.nodeValue.length);
-        }else if(node.nodeType == 1){
+        }else if(node.nodeType == 1){this.currentNode = node;
           this.range.setEnd(node,1);
         }
         break;
@@ -283,7 +284,6 @@ function Editor(elementId, module){
   var self = this;
   //editor's container element
   this.elem = document.getElementById(elementId);
-  this.elem.appendChild(document.createTextNode(''));
   this.textEngine = new TextEngine(this.elem);
   
 
@@ -296,26 +296,28 @@ function Editor(elementId, module){
   
   this.selection = window.getSelection();
   this.elem.addEventListener("keydown", function(event){
+    
     if(event.keyCode == 13){
       event.preventDefault();
-      var range = self.selection.getRangeAt(0);
-      var node = range.startContainer;
-      var offset = range.startOffset;
-      if(node.parentNode != self.elem){
-        var textNode = node.cloneNode(true);
-        var str = textNode.nodeValue;
-        textNode.nodeValue = str.slice(0,offset)+'\n'+str.slice(offset);
-        node = node.parentNode;
-        node.parentNode.insertBefore(textNode, node);
-        node.parentNode.removeChild(node);
-        range.setStart(textNode,offset+1);
-        range.setEnd(textNode,offset+1);
+      self.prettifyInit();
+      var node = self.selection.anchorNode;
+      var localPos = self.textEngine.lineByCursorPos(node,self.selection.anchorOffset);
+      var str = self.textEngine.getLineText();
+      
+      //if caret at the very end of the text, newline insertion requires atleast two
+      //characters to work(Chrome), for example '\n\n' or '\n ' will work. 
+      //It is a mystery to me...should ask on stackoverflow guys
+      if(localPos == str.length && self.textEngine.currentNode.nextSibling == null){
+        self.textEngine.setLine(self.prettify(str)+'\n ');
       }else{
-        range.insertNode(document.createTextNode('\n'));
+        self.textEngine.setLine(self.prettify(str.slice(0,localPos))+'\n'+self.prettify(str.slice(localPos)));
       }
-      range.collapse(false);
-      self.selection.removeAllRanges();
-      self.selection.addRange(range);
+      
+      var range = self.textEngine.getRangeByCursor(localPos+1);
+      if(range){
+        self.selection.removeAllRanges();
+        self.selection.addRange(range);
+      }
     }
   });
   

@@ -5,6 +5,18 @@
     <script src="modules/m-html.js"></script>
     <script src="editor.js"></script>
     <style>
+      h1,h2{
+        font-family: Monaco, 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Lucida Console', monospace;
+      }
+      h1{
+        font-size:34px;
+        color:#A13D2B
+      }
+      .editable{
+        //box-shadow reduce performance on scrolling,thats unexpectable
+        box-shadow: 0px 0px 5px #bbb;
+      }
+      
       .button{
         background: #F05945;
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF9780', endColorstr='#F05945'); 
@@ -49,13 +61,6 @@
     <h2>Browser support</h2>
     <ul>
       <li>Google Chrome</li>
-    </ul>
-    <h2>Main issues</h2>
-    <ul>
-      <li>Performance with big files</li>
-      <li>Multiline comments</li>
-      <li>JS & HTML modules</li>
-      <li>Enter bugs</li>
     </ul>
     <script>
       var editor = new Editor('editable', JS);
