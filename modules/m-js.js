@@ -34,7 +34,7 @@ var JS = {
           this.multilineComment = false;
           lines[i] = '<span class="comment">'+str.slice(0,commentEnding+2)+'</span>';
           str = str.slice(commentEnding+2);
-        }else{ //replace comment line with dummy characters
+        }else{
           lines[i] = str.replace(/^(.*)$/g, '<span class="comment">$1</span>');
           continue;
         }
